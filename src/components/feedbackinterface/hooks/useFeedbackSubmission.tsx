@@ -1,45 +1,44 @@
-import { useCallback } from "react";
-import axios from "axios";
-import { useAppDispatch } from "../../../AppStateContext";
-import { Feedback } from "../../../types";
+import { useCallback } from 'react';
+import axios from 'axios';
+import { Feedback } from '../../../types';
+import { useAppDispatch } from '../../../AppStateContext';
 
-export const useFeedbackSubmission = (
-  sampleEpisodes: () => Promise<void>,
-  advanceToNextStep: () => Promise<boolean>,
-) => {
+export const useFeedbackSubmission = (sampleEpisodes: () => Promise<void>) => {
   const dispatch = useAppDispatch();
 
-  const scheduleFeedback = useCallback(
-    (feedback: Feedback) => {
-      dispatch({ type: "SCHEDULE_FEEDBACK", payload: feedback });
-    },
-    [dispatch],
-  );
+  const scheduleFeedback = useCallback((feedback: Feedback) => {
+    dispatch({ type: 'SCHEDULE_FEEDBACK', payload: feedback });
+  }, [dispatch]);
 
-  const submitFeedback = useCallback(
-    async (scheduledFeedback: Feedback[]) => {
-      try {
-        // Submit feedback to server
-        await axios.post("/data/give_feedback", scheduledFeedback);
-
-        // Clear scheduled feedback before proceeding
-        await dispatch({ type: "CLEAR_SCHEDULED_FEEDBACK" });
-
-        // Try to advance to next step
-        const hasNextStep = await advanceToNextStep();
-
-        // Only sample new episodes if we successfully advanced
-        if (hasNextStep) {
-          await sampleEpisodes();
-        }
-      } catch (error) {
-        console.error("Error submitting feedback:", error);
-        // Optionally re-throw the error if you want to handle it in the UI
-        throw error;
-      }
-    },
-    [dispatch, advanceToNextStep, sampleEpisodes],
-  );
+  const submitFeedback = async (scheduledFeedback: Feedback[]) => {
+    // Send all feedback simultaneously when Submit button is clicked
+    await Promise.all(
+      scheduledFeedback.map(feedback => 
+        axios.post('/data/give_feedback', feedback)
+      )
+    );
+    
+    dispatch({ type: 'CLEAR_SCHEDULED_FEEDBACK' });
+    await sampleEpisodes();
+  };
 
   return { scheduleFeedback, submitFeedback };
 };
+
+
+
+
+
+
+
+// const submitFeedback = (scheduledFeedback: Feedback[]) => {
+//   axios.post('/data/give_feedback', scheduledFeedback)
+//     .then(() => {
+//       dispatch({ type: 'CLEAR_SCHEDULED_FEEDBACK' });
+//       sampleEpisodes();
+//     })
+//     .catch(error => {
+//       console.error('Error submitting feedback:', error);
+//     });
+// };
+
