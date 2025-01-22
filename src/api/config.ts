@@ -1,1 +1,1 @@
-export const API_URL = 'https://rlhfblender-backend.herokuapp.com';
+export const API_URL = 'https://rlhfblender-backend-2ad552cdec0d.herokuapp.com';
