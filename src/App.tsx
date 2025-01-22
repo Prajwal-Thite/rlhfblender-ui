@@ -7,8 +7,6 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 
 import axios from 'axios';
-import { API_URL } from './api/config';
-axios.defaults.baseURL = API_URL;
 
 import Menu from './components/menubar/menu';
 import ConfigModal from './components/modals/config-modal';
