@@ -176,7 +176,11 @@ const ExperimentStartModal = ({ onClose }: ExperimentStartModalProps) => {
                 {[
                   {
                     title: "Review the Gameplay Videos",
-                    content: "You will watch gameplay videos featuring the Yellow Team. The Yellow Team's player acts as the agent. Your task is to observe the agent's gameplay closely and provide detailed feedback. ",
+                    content: (
+                      <Typography>
+                          You will watch gameplay videos featuring the <Box component="span" sx={{ color: '#ffc83d' }}>Yellow Team</Box>. The <Box component="span" sx={{ color: '#ffc83d' }}>Yellow Team's</Box> player acts as the agent. Your task is to observe the agent's gameplay closely and provide detailed feedback.
+                      </Typography>
+                  ),
                     icon: "🎮"
                   },
                   {
@@ -195,10 +199,19 @@ const ExperimentStartModal = ({ onClose }: ExperimentStartModalProps) => {
                     icon: "⚙️"
                   },
                   {
+                    title: "Instruction Guide",
+                    content: (
+                      <Typography>
+                          While providing text feedback, refer to the help icon <Box component="span" sx={{ color: 'error.main', fontWeight: 'bold' }}>(?)</Box> next to the text box for helpful guidelines on writing effective feedback. These guidelines will help you provide detailed and constructive feedback.
+                      </Typography>
+                  ),
+                    icon: "💡"
+                  },
+                  {
                     title: "Complete the Feedback Form",
                     content: "Once you have reviewed the videos and provided your feedback, you will be directed to a feedback form to complete the study.",
                     icon: "📝"
-                  }
+                  },
                 ].map((section, index) => (
                   <Grid item xs={12} md={6} key={index}>
                     <Card 

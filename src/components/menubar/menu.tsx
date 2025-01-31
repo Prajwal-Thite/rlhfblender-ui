@@ -143,7 +143,7 @@ const Menu: React.FC<MenuProps> = ({ resetSampler }: MenuProps) => {
             label="Backend Config"
             onChange={selectBackendConfig}
           >
-            {setupConfigState.allBackendConfigs.map((config) => (
+            {(setupConfigState.allBackendConfigs || []).map((config) => (
               <MenuItem key={config.id.toString()} value={config.id.toString()}>
                 {config.name}
               </MenuItem>
