@@ -1,54 +1,44 @@
-import { useCallback } from "react";
-import axios from "axios";
-import { useAppDispatch } from "../../../AppStateContext";
-import { Feedback, FeedbackType } from "../../../types";
+import { useCallback } from 'react';
+import axios from 'axios';
+import { Feedback } from '../../../types';
+import { useAppDispatch } from '../../../AppStateContext';
 
-export const useFeedbackSubmission = (
-  sampleEpisodes: (step: number) => Promise<void>,
-  advanceToNextStep: () => Promise<boolean>
-) => {
+export const useFeedbackSubmission = (sampleEpisodes: () => Promise<void>) => {
   const dispatch = useAppDispatch();
 
-  const scheduleFeedback = useCallback(
-    (feedback: Feedback) => {
-      dispatch({ type: "SCHEDULE_FEEDBACK", payload: feedback });
-    },
-    [dispatch]
-  );
+  const scheduleFeedback = useCallback((feedback: Feedback) => {
+    dispatch({ type: 'SCHEDULE_FEEDBACK', payload: feedback });
+  }, [dispatch]);
 
-  const submitFeedback = useCallback(
-    async (scheduledFeedback: Feedback[], sessionId: string) => {
-      try {
-        // Create submit meta feedback
-        const submitFeedback: Feedback = {
-          session_id: sessionId,
-          feedback_type: FeedbackType.Meta,
-          granularity: "entire",
-          timestamp: Date.now(),
-          meta_action: "submit",
-          targets: [],
-        };
-        
-        // Include submit feedback in the payload
-        const feedbackToSubmit = [...scheduledFeedback, submitFeedback];
-        
-        // Submit all feedback to server
-        await axios.post("/data/give_feedback", feedbackToSubmit);
-        
-        // Clear scheduled feedback
-        await dispatch({ type: "CLEAR_SCHEDULED_FEEDBACK" });
-
-        // Advance to next step
-        const hasNextStep = await advanceToNextStep();
-        
-        return hasNextStep;
-      } catch (error) {
-        console.error("Error submitting feedback:", error);
-        throw error;
-      }
-    },
-    [dispatch, advanceToNextStep]
-  );
+  const submitFeedback = async (scheduledFeedback: Feedback[]) => {
+    // Send all feedback simultaneously when Submit button is clicked
+    await Promise.all(
+      scheduledFeedback.map(feedback => 
+        axios.post('/data/give_feedback', feedback)
+      )
+    );
+    
+    dispatch({ type: 'CLEAR_SCHEDULED_FEEDBACK' });
+    await sampleEpisodes();
+  };
 
   return { scheduleFeedback, submitFeedback };
 };
+
+
+
+
+
+
+
+// const submitFeedback = (scheduledFeedback: Feedback[]) => {
+//   axios.post('/data/give_feedback', scheduledFeedback)
+//     .then(() => {
+//       dispatch({ type: 'CLEAR_SCHEDULED_FEEDBACK' });
+//       sampleEpisodes();
+//     })
+//     .catch(error => {
+//       console.error('Error submitting feedback:', error);
+//     });
+// };
+

@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 type Episode = {
   env_name: string;
@@ -24,19 +24,18 @@ type Target = {
 // Idea is good, but i would prefer to use a string, because it is more flexible
 // in the frontend. In the backend, we do use the fixed enum.
 enum FeedbackType {
-  Evaluative = "evaluative",
-  Comparative = "comparative",
-  Corrective = "corrective",
-  Demonstrative = "demonstrative",
-  FeatureSelection = "featureSelection",
-  Text = "text",
-  Meta = "meta",
+  Evaluative = 'evaluative',
+  Comparative = 'comparative',
+  Corrective = 'corrective',
+  Demonstrative = 'demonstrative',
+  FeatureSelection = 'featureSelection',
+  Text = 'text',
 }
 
 type Feedback = {
   feedback_type: FeedbackType;
   targets: Target[] | null;
-  granularity: "state" | "episode" | "segment" | "entire";
+  granularity: 'state' | 'episode' | 'segment' | 'entire';
   timestamp: number;
   session_id: string;
 
@@ -58,7 +57,7 @@ type Experiment = {
 
 type UIConfig = {
   // A map of enabled/disabled UI components
-  id: string;
+  id: number;
   name: string;
   description: string;
   uiComponents: {
@@ -72,15 +71,11 @@ type UIConfig = {
 };
 
 type BackendConfig = {
-  id: string;
+  id: number;
   name: string;
   description: string;
   samplingStrategy: string;
   loggerMode: string;
-
-  // Configs for scheduling of UI-configs
-  selectedUiConfigs: { id: string; name: string }[];
-  uiConfigMode: "sequential" | "alternating" | "random";
 
   // Configs for feedback model training
   feedbackModelTrainingEnabled: boolean;
@@ -91,23 +86,23 @@ type BackendConfig = {
 };
 
 type GymSpaceInfo = {
-  label: string;
-  shape: number[];
-  dtype: string;
-  labels: { [key: string]: number };
-  low?: number | number[];
-  high?: number | number[];
+  label:  string,
+  shape: number[],
+  dtype:  string,
+  labels: { [key: string]: number },
+  low?: number | number[],
+  high?: number | number[],
 };
 
-type AppMode = "study" | "configure";
+type AppMode = 'study' | 'configure';
 
 type AppState = {
   // Drag and drop
   app_mode: AppMode;
-  videoURLCache: { [key: string]: string };
-  rewardsCache: { [key: string]: number[] };
-  uncertaintyCache: { [key: string]: number[] };
-  thumbnailURLCache: { [key: string]: string };
+  videoURLCache: {[key: string]: string};
+  rewardsCache: {[key: string]: number[]};
+  uncertaintyCache: {[key: string]: number[]};
+  thumbnailURLCache: {[key: string]: string};
   status_bar_collapsed: boolean;
   uiConfigModalOpen: boolean;
   backendConfigModalOpen: boolean;
@@ -123,7 +118,8 @@ type AppState = {
   sliderValue: number;
   rankeableEpisodeIDs: string[];
   episodeIDsChronologically: Episode[];
-  highlightedEpisodes: { value: number }[];
+  activeEpisodes: Episode[];
+  highlightedEpisodes: {value: number}[];
   scheduledFeedback: Feedback[];
   currentStep: number;
   startModalContent: React.ReactNode | string | undefined;
@@ -132,12 +128,6 @@ type AppState = {
   showStudyCode: boolean;
   studyCode: string;
   setupComplete: boolean;
-  feedbackInterfaceReset: (() => void) | null;
-};
-
-type SequenceElement = {
-  uiConfig: { id: string; name: string };
-  batch: number[];
 };
 
 type SetupConfigState = {
@@ -145,7 +135,6 @@ type SetupConfigState = {
   activeBackendConfig: BackendConfig;
   allUIConfigs: UIConfig[];
   allBackendConfigs: BackendConfig[];
-  uiConfigSequence: SequenceElement[];
 };
 type AppProps = {};
 
@@ -161,6 +150,5 @@ export type {
   Experiment,
   GymSpaceInfo,
   SetupConfigState,
-  SequenceElement,
 };
-export { FeedbackType };
+export {FeedbackType};
