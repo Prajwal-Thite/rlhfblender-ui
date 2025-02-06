@@ -1,5 +1,5 @@
-import React from 'react';
-import { Box, Typography, Button } from '@mui/material';
+import React, { useState } from 'react';
+import { Box, Typography, Button, CircularProgress } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import Send from '@mui/icons-material/Send';
 import Progressbar from './progressbar';
@@ -22,6 +22,13 @@ export const ProgressHeader: React.FC<ProgressHeaderProps> = ({
   onSubmitHover,
 }) => {
   const theme = useTheme();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleSubmit = async () => {
+    setIsLoading(true);
+    await onSubmit();
+    setIsLoading(false);
+  };
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'row', backgroundColor: theme.palette.background.l1 }}>
@@ -54,12 +61,13 @@ export const ProgressHeader: React.FC<ProgressHeaderProps> = ({
       <Box sx={{ p: 1, backgroundColor: theme.palette.background.l1 }}>
         <Button
           variant="contained"
-          endIcon={<Send />}
-          onClick={onSubmit}
+          endIcon={isLoading ? <CircularProgress size={20} color="inherit" /> :<Send />}
+          onClick={handleSubmit}
           onMouseEnter={() => onSubmitHover(true)}
           onMouseLeave={() => onSubmitHover(false)}
+          disabled={isLoading}
         >
-          Submit Feedback
+          {isLoading ? 'Submitting...' : 'Submit Feedback'}
         </Button>
       </Box>
     </Box>
