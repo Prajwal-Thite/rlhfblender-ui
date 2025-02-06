@@ -194,8 +194,19 @@ const instructionsText = (
         color: '#E91E63'
       },
       {
+        icon: '📈',
+        title: "6. Comparative Episode Analysis",
+        content: [
+          "You can compare the agent's performance across episodes to highlight improvements or regressions:",
+          "• \"Compared to the previous episode, the agent's defense has weakened while attacking has improved.\"",
+          "• \"The agent's shooting accuracy was better in the previous episode and needs more focus now.\"",
+          "• \"The passing game has shown overall improvement from the last episode, but attacking positioning needs work.\"",
+        ],
+        color: '#795548'
+      },
+      {
         icon: '💡',
-        title: "6. Constructive Communication",
+        title: "7. Constructive Communication",
         content: [
           "Ensure your feedback is actionable and easy to understand. Avoid vague statements and focus on specific actions or strategies that can help the agent improve:",
           "• Instead of: \"The agent was bad.\"",
