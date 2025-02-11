@@ -129,92 +129,23 @@ const instructionsText = (
       textAlign: 'center',
       fontStyle: 'italic'
     }}>
-      Welcome to our project! Your feedback plays a vital role in improving the performance of our AI football agents <strong style={{ color: '#FFD700' }}>(Yellow Team)</strong>. To ensure that your feedback is clear and actionable, please follow the guidelines below.
+      Welcome to our project! Your feedback plays a vital role in improving the performance of our AI football agents <strong style={{ color: '#FFD700' }}>(Yellow Team)</strong>. Here are some examples of clear and specific feedback that helps improve our AI football agents.
     </Typography>
 
     {[
       {
         icon: '🤖',
-        title: "1. Agent Reference Guide",
+        title: "1. Feedback Examples",
         content: [
-          "When providing feedback, always refer to the agent explicitly. For example:",
-          "• \"The agent should improve its passing.\"",
-          "• \"The agent should focus on maintaining better defensive positioning.\"",
-          "• \"The agent's decision to shoot was effective.\""
+          "•\"The agent received the ball near the penalty area but hesitated before passing, allowing the defender to close the gap. A quicker decision would have preserved the attacking momentum and created a better scoring opportunity.\"",
+          "• \"When pressing high, the agent frequently sprinted toward the ball without considering defensive cover. Instead, it should balance its positioning to prevent the opponent from easily bypassing the press.\"",
+          "• \"During a counterattack, the agent opted for a short pass despite having an open teammate further up the field. In this scenario, a high pass would have been more effective in quickly transitioning to an attacking position.\"",
+          "• \"The agent attempted to dribble past two defenders but lost possession in a dangerous area. A safer option would have been to pass to a nearby teammate and reposition instead of forcing the dribble.\"",
+          "• \"Compared to the previous episode, the agent demonstrated improved passing accuracy but still struggles with defensive positioning. It should focus on maintaining a structured formation to avoid leaving gaps at the back.\""
         ],
         color: '#2196F3'
-      },
-      {
-        icon: '📊',
-        title: "2. Performance Analysis",
-        content: [
-          "You can comment on whether the agent's actions were good or bad. If you believe an action was suboptimal, suggest specific improvements. For example:",
-          "• \"The agent's pass was well-executed but could be more frequent in similar situations.\"",
-          "• \"The agent should avoid idle time and focus on running to better positions.\"",
-          "• \"Instead of a short pass, the agent should consider a high pass when crossing.\""
-        ],
-        color: '#4CAF50'
-      },
-      {
-        icon: '⚽',
-        title: "3. Action-Specific Feedback",
-        content: [
-          "You can refer to specific actions from the list below when giving feedback on the agent’s performance:",
-          "• Movement: Run (8 directions), Sprint",
-          "• Ball Control: Short/High/Long pass, Shot, Dribble",
-          "• Defense: Sliding, Positioning",
-          "• Special: Idle, Release sprint/dribble",
-          "For example:",
-          "• \"The agent should use short passes more often when under pressure.\"",
-          "• \"The agent should sprint less to conserve stamina for the second half.\"",
-          "• \"The agent’s dribbling needs improvement when moving toward the goal.\""
-        ],
-        color: '#FF9800'
-      },
-      {
-        icon: '⚔️',
-        title: "4. Tactical Insights",
-        content: [
-          "You can also provide broader tactical feedback about the agent’s positioning or strategy:",
-          "• \"Improve defensive positioning for better opponent coverage.\"",
-          "• \"The agent should prioritize attacking positions when the team is trailing.\"",
-          "• \"Maintain formation structure during transitions\""
-        ],
-        color: '#9C27B0'
-      },
-      {
-        icon: '🎯',
-        title: "5. Mission Suggestions",
-        content: [
-          "To help the agent understand goals that lead to positive results, you can provide mission-based feedback. Missions are specific objectives that guide the agent’s performance. Set clear objectives:",
-          "• \"Score a goal in the second half\"",
-          "• \"Intercept passes in defensive half\"",
-          "• \"Complete three successful high passes\""
-        ],
-        color: '#E91E63'
-      },
-      {
-        icon: '📈',
-        title: "6. Comparative Episode Analysis",
-        content: [
-          "You can compare the agent's performance across episodes to highlight improvements or regressions:",
-          "• \"Compared to the previous episode, the agent's defense has weakened while attacking has improved.\"",
-          "• \"The agent's shooting accuracy was better in the previous episode and needs more focus now.\"",
-          "• \"The passing game has shown overall improvement from the last episode, but attacking positioning needs work.\"",
-        ],
-        color: '#795548'
-      },
-      {
-        icon: '💡',
-        title: "7. Constructive Communication",
-        content: [
-          "Ensure your feedback is actionable and easy to understand. Avoid vague statements and focus on specific actions or strategies that can help the agent improve:",
-          "• Instead of: \"The agent was bad.\"",
-          "• Say: \"The agent should improve passing accuracy and possession.\"",
-          "• Provide specific, measurable improvements."
-        ],
-        color: '#00BCD4'
-      }      
+      },      
+    
     ].map((section, index) => (
       <Box key={index} sx={{ 
         mb: 4,

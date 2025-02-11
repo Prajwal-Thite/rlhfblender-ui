@@ -48,7 +48,7 @@ const ExperimentStartModal = ({ onClose }: ExperimentStartModalProps) => {
   };
 
   const handleNext = () => {
-    setActiveTab((prev) => Math.min(prev + 1, 3));
+    setActiveTab((prev) => Math.min(prev + 1, 2));
   };
 
   const feedbackTypes = Object.entries(activeUIConfig.feedbackComponents ?? {})
@@ -91,7 +91,7 @@ const ExperimentStartModal = ({ onClose }: ExperimentStartModalProps) => {
         }}
       >
         <List>
-          {['Introduction', 'Instructions', 'Feedback Options', 'Privacy Policy'].map((text, index) => (
+          {['Introduction', 'Instructions', 'Privacy Policy'].map((text, index) => (
             <ListItem
               button
               key={text}
@@ -120,8 +120,7 @@ const ExperimentStartModal = ({ onClose }: ExperimentStartModalProps) => {
           </Typography>
           <Tabs value={activeTab} onChange={handleTabChange}>
             <Tab label="Introduction" />
-            <Tab label="Instructions" />
-            <Tab label="Feedback Options" />
+            <Tab label="Instructions" />            
             <Tab label="Privacy Policy" />
           </Tabs>
         </Box>
@@ -144,7 +143,7 @@ const ExperimentStartModal = ({ onClose }: ExperimentStartModalProps) => {
                       width: '100%',
                       height: '100%',
                     }}
-                    src="https://www.youtube.com/embed/nzcNqKEIbCY"
+                    src="https://www.youtube.com/embed/ocBbJtnhzbo"
                     title="YouTube video player"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                     allowFullScreen
@@ -245,7 +244,7 @@ const ExperimentStartModal = ({ onClose }: ExperimentStartModalProps) => {
           )}
 
           {/* Feedback Options Tab */}
-          {activeTab === 2 && (
+          {activeTab === 9 && (
             <Box>
               <Typography variant="h6" gutterBottom>
                 Available Feedback Options
@@ -301,7 +300,7 @@ const ExperimentStartModal = ({ onClose }: ExperimentStartModalProps) => {
           )}
 
           {/* Privacy Policy Tab */}
-          {activeTab === 3 && (
+          {activeTab === 2 && (
             <Box>
               <Typography variant="h6" gutterBottom>
                 Data Protection and Privacy
@@ -325,7 +324,7 @@ const ExperimentStartModal = ({ onClose }: ExperimentStartModalProps) => {
           justifyContent: 'flex-end',
           gap: 2
         }}>
-          {activeTab !== 3 && (
+          {activeTab !== 2 && (
             <Button
               variant="contained"
               endIcon={<NavigateNextIcon />}
@@ -334,7 +333,7 @@ const ExperimentStartModal = ({ onClose }: ExperimentStartModalProps) => {
               Next
             </Button>
           )}
-          {activeTab === 3 && (
+          {activeTab === 2 && (
             <Button
               variant="contained"
               color="primary"
