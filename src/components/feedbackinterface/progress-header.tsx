@@ -22,13 +22,13 @@ export const ProgressHeader: React.FC<ProgressHeaderProps> = ({
   onSubmitHover,
 }) => {
   const theme = useTheme();
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = async () => {
-    setIsLoading(true);
-    await onSubmit();
-    setIsLoading(false);
-  };
+  // const handleSubmit = async () => {
+  //   setIsLoading(true);
+  //   await onSubmit();
+  //   setIsLoading(false);
+  // };
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'row', backgroundColor: theme.palette.background.l1 }}>
@@ -61,13 +61,16 @@ export const ProgressHeader: React.FC<ProgressHeaderProps> = ({
       <Box sx={{ p: 1, backgroundColor: theme.palette.background.l1 }}>
         <Button
           variant="contained"
-          endIcon={isLoading ? <CircularProgress size={20} color="inherit" /> :<Send />}
-          onClick={handleSubmit}
+          // endIcon={isLoading ? <CircularProgress size={20} color="inherit" /> :<Send />}
+          endIcon={<Send />}
+          // onClick={handleSubmit}
+          onClick={onSubmit}          
           onMouseEnter={() => onSubmitHover(true)}
           onMouseLeave={() => onSubmitHover(false)}
-          disabled={isLoading}
+          // disabled={isLoading}
         >
-          {isLoading ? 'Submitting...' : 'Submit Feedback'}
+          {/* {isLoading ? 'Submitting...' : 'Submit Feedback'} */}
+          Submit Feedback          
         </Button>
       </Box>
     </Box>

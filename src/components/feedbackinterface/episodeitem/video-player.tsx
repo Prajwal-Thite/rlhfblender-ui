@@ -87,7 +87,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
           <source src={videoURL} type="video/mp4" />
         </video>
       )}
-                  <Box
+            <Box
               sx={{
                 position: 'absolute',
                 bottom: 0,
@@ -100,18 +100,18 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
                   : '75% auto',
               }}
             >
-              <Fade in={mouseOnVideo} timeout={500}>
+              
                 <Box
                   onMouseEnter={() => setMouseOnVideo(true)}
                   onMouseLeave={() => setMouseOnVideo(false)}
                   sx={{
                     gridTemplateRows: '1fr',
                     gridTemplateColumns: '1fr 1fr 1fr 1fr',
-                    display: 'flex',                                                         
+                    display: 'flex',                                                                                                                    
                   }}
                 >
                   <IconButton className="controls_icons" aria-label="reqind" onClick={handleRewind}>
-                    <FastRewind style={{color: theme.palette.text.secondary}} />
+                    <FastRewind style={{color: '#FFFFFF'}} />
                   </IconButton>
                   <IconButton
                     className="controls_icons"
@@ -120,34 +120,29 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
                   >
                     {!playing ? (
                       <PlayArrowSharp
-                        style={{color: theme.palette.text.secondary}}
+                        style={{color: '#FFFFFF'}}
                       />
                     ) : (
                       <PauseSharp
-                        style={{color: theme.palette.text.secondary}}
+                        style={{color: '#FFFFFF'}}
                       />
                     )}
                   </IconButton>
 
-                  <IconButton className="controls_icons" aria-label="forward" onClick={handleFastForward}>
-                    <FastForwardSharp
-                      style={{color: theme.palette.text.secondary}}
-                    />
-                  </IconButton>
                   <IconButton 
                     className="controls_icons" 
                     aria-label="fullscreen"
                     onClick={handleFullScreen}
                   >
                     {!isFullScreen ? (
-                      <Fullscreen style={{color: theme.palette.text.secondary}} />
+                      <Fullscreen style={{color: '#FFFFFF'}} />
                     ) : (
-                      <FullscreenExit style={{color: theme.palette.text.secondary}} />
+                      <FullscreenExit style={{color: '#FFFFFF'}} />
                     )}
                   </IconButton>
 
                 </Box>
-              </Fade>
+              
               {showFeatureSelection && (
                 <IconButton
                   onClick={() => onFeatureSelect()}
