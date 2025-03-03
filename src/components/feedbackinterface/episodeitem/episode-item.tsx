@@ -62,7 +62,7 @@ const EpisodeItemContainer = styled('div')<EpisodeItemContainerProps>(
     gridTemplateRows:
       horizontalRanking && numItemsInColumn === 1
         ? 'auto auto auto auto auto'
-        : 'auto auto auto',
+        : '100px auto auto',
     gridTemplateAreas:
       horizontalRanking && numItemsInColumn === 1
         ? `"drag"

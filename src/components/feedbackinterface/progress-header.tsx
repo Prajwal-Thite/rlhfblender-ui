@@ -33,7 +33,7 @@ export const ProgressHeader: React.FC<ProgressHeaderProps> = ({
   };
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'row', backgroundColor: theme.palette.background.l1 }}>
+    <Box sx={{ display: 'flex', flexDirection: 'row', backgroundColor: theme.palette.background.l1, justifyContent: 'flex-end' }}>
       {showProgressBar && (
         <Box
           id="progress-bar"

@@ -233,14 +233,20 @@ const onDragEnd = (dropResult: DropResult) => {
     setEpisodeFeedbackStates(initialStates);
   }, [rankeableEpisodeIDs]);
 
+  const [stepCount, setStepCount] = useState(0);
+
   return (
     <RatingInfoContext.Provider value={ratingInfoValue}>
       <ProgressHeader
         showProgressBar={activeUIConfig.uiComponents.progressBar}
         numEpisodes={episodeIDsChronologically.length}
-        currentStep={currentStep}
+        currentStep={stepCount}
         maxRankingElements={activeUIConfig.max_ranking_elements}
-        onSubmit={() => submitFeedback(scheduledFeedback)}
+        // onSubmit={() => submitFeedback(scheduledFeedback)}
+        onSubmit={async () => {
+          await submitFeedback(scheduledFeedback);
+          setStepCount(prev => prev + 1);  // Increment our counter
+        }}
         onSubmitHover={setIsOnSubmit}
         isSubmitDisabled={!allEpisodesHaveFeedback}
       />

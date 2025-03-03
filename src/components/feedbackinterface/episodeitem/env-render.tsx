@@ -35,7 +35,7 @@ const EnvRender: React.FC<EnvRenderProps> = ({
         alignItems: 'center',
         justifyContent: 'center',
         gridArea: 'envRender',
-        maxWidth: '25vh', // Constrain width to the same max width as the video
+        maxWidth: '100%', // Constrain width to the same max width as the video
       }}
     >
       <VideoPlayer

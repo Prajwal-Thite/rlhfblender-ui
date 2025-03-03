@@ -40,9 +40,10 @@ interface TimelineSectionProps {
       <Box
         sx={{
           display: 'flex',
-          alignItems: 'center',
+          alignItems: 'flex-start',
+          alignSelf: 'flex-start',
           borderRadius: '10px',
-          m: 1,
+          m: 1,          
           border: hasCorrectiveFeedback
             ? `1px solid ${theme.palette.primary.main}`
             : `1px solid ${theme.palette.divider}`,

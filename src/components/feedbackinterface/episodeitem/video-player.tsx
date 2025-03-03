@@ -64,10 +64,8 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
         m: 1,
         overflow: 'hidden',
         position: 'relative',
-        width: '100%',
-        height: '100%',
-        maxHeight: '25vh',
-        maxWidth: '25vh',
+        width: '100%',        
+        aspectRatio: '16/9',
       }}
     >
       {videoURL && (
@@ -128,6 +126,10 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
                       />
                     )}
                   </IconButton>
+
+                  {/* <IconButton className="controls_icons" aria-label="fastforward" onClick={handleFastForward}>
+                    <FastForwardSharp style={{color: '#FFFFFF'}} />
+                  </IconButton> */}
 
                   <IconButton 
                     className="controls_icons" 

@@ -50,7 +50,7 @@ const Modals: React.FC<ModalsProps> = ({
     return '';
   };
 
-  console.log("CORRECTION correction", customInput);
+  // console.log("CORRECTION correction", customInput);
 
   return (
     <>
