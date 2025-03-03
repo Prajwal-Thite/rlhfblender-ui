@@ -88,6 +88,7 @@ interface EpisodeItemProps {
   updateEvalFeedback: (episodeId: string, rating: number) => void;
   setDemoModalOpen: ({open, seed}: {open: boolean; seed: number}) => void;
   actionLabels?: any[];
+  onTextFeedbackChange: (hasText: boolean) => void;
 }
 
 type StepDetails = {
@@ -108,6 +109,7 @@ const EpisodeItem: React.FC<EpisodeItemProps> = React.memo(({
   updateEvalFeedback,
   setDemoModalOpen,
   actionLabels = [],
+  onTextFeedbackChange,
 }) => {
   const videoRef = useRef<HTMLVideoElement>(document.createElement('video'));
   const [videoURL, setVideoURL] = useState('');
@@ -391,6 +393,7 @@ const EpisodeItem: React.FC<EpisodeItemProps> = React.memo(({
             sessionId={sessionId}
             scheduleFeedback={scheduleFeedback}
             hasTextFeedback={hasTextFeedback}
+            onFeedbackChange={onTextFeedbackChange}
           />
         )}
 
@@ -414,4 +417,7 @@ const EpisodeItem: React.FC<EpisodeItemProps> = React.memo(({
   );
 });
 
-export default React.memo(EpisodeItem);
+export default React.memo(EpisodeItem, (prevProps, nextProps) => {
+  return prevProps.episodeID === nextProps.episodeID && 
+         prevProps.evalFeedback === nextProps.evalFeedback;
+});

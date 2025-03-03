@@ -4,6 +4,7 @@ import { Box, TextField, useTheme, IconButton, Tooltip, Typography, Grid  } from
 import { Feedback, FeedbackType } from '../../../types';
 import { EpisodeFromID } from '../../../id';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+import { debounce } from 'lodash';
 
 interface TextFeedbackProps {
     showTextFeedback: boolean;
@@ -11,16 +12,26 @@ interface TextFeedbackProps {
     episodeId: string;
     sessionId: string;
     hasTextFeedback?: boolean;
+    onFeedbackChange: (hasText: boolean) => void;
   // value: string;
 }
 
-const TextFeedback: React.FC<TextFeedbackProps> = ({ showTextFeedback, scheduleFeedback, episodeId, sessionId, hasTextFeedback }) => {
+const TextFeedback: React.FC<TextFeedbackProps> = ({ showTextFeedback, scheduleFeedback, episodeId, sessionId, hasTextFeedback, onFeedbackChange }) => {
   //const [feedback, setFeedback] = useState('');
   const theme = useTheme();
   const [text, setText] = useState('');
 
+  const debouncedFeedbackChange = useCallback(
+    debounce((value: string) => {
+      onFeedbackChange(value.trim().length > 0);
+    }, 100),
+    [onFeedbackChange]
+  );
+
   const handleTextChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setText(event.target.value);
+    const newText = event.target.value;
+    setText(newText);
+    debouncedFeedbackChange(newText);
   };
 
   const handleSubmit = useCallback(() => {

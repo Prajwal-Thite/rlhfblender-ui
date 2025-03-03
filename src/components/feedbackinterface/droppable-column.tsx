@@ -21,6 +21,7 @@ type DroppableColumnProps = {
   updateEvalFeedback: (episodeId: string, rating: number) => void;
   setDemoModalOpen: ({open, seed}: {open: boolean; seed: number}) => void;
   actionLabels: any[];
+  onTextFeedbackChange: (episodeId: string, hasText: boolean) => void;
 };
 
 const DroppableColumn: React.FC<DroppableColumnProps> = ({
@@ -35,6 +36,7 @@ const DroppableColumn: React.FC<DroppableColumnProps> = ({
   updateEvalFeedback,
   setDemoModalOpen,
   actionLabels,
+  onTextFeedbackChange,
 }) => {
   const UIConfig = useSetupConfigState().activeUIConfig;
   const horizontalRanking = UIConfig.uiComponents.horizontalRanking;
@@ -131,6 +133,7 @@ const DroppableColumn: React.FC<DroppableColumnProps> = ({
                   updateEvalFeedback={updateEvalFeedback}
                   setDemoModalOpen={setDemoModalOpen}
                   actionLabels={actionLabels}
+                  onTextFeedbackChange={(hasText) => onTextFeedbackChange(episodeID, hasText)}
                 />
               ))}
               {provided.placeholder}

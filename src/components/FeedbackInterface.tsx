@@ -1,5 +1,5 @@
 // FeedbackInterface.tsx
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState, useMemo, useEffect, useCallback } from 'react';
 import { DragDropContext, DropResult } from 'react-beautiful-dnd';
 import { Box } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
@@ -63,6 +63,14 @@ useEffect(() => {
   );
   setRanks(new_ranks);
   setColumnOrder(Object.entries(new_ranks).map(([key, _]) => key));
+}, [rankeableEpisodeIDs]);
+
+useEffect(() => {
+  const initialStates = rankeableEpisodeIDs.reduce((acc, episodeId) => ({
+      ...acc,
+      [episodeId]: false
+  }), {});
+  setEpisodeFeedbackStates(initialStates);
 }, [rankeableEpisodeIDs]);
 
 // Define onDragEnd function
@@ -206,6 +214,25 @@ const onDragEnd = (dropResult: DropResult) => {
     hasFeedback,
   }), [isOnSubmit, hasFeedback]);
 
+  const [episodeFeedbackStates, setEpisodeFeedbackStates] = useState<{[key: string]: boolean}>({});
+
+  const handleTextFeedbackChange = useCallback((episodeId: string, hasText: boolean) => {
+    setEpisodeFeedbackStates(prev => ({...prev, [episodeId]: hasText}));
+  }, []);
+
+  const allEpisodesHaveFeedback = useMemo(() => 
+    Object.values(episodeFeedbackStates).every(state => state),
+    [episodeFeedbackStates]
+  );
+
+  useEffect(() => {
+    const initialStates = rankeableEpisodeIDs.reduce((acc, episodeId) => ({
+      ...acc,
+      [episodeId]: false
+    }), {});
+    setEpisodeFeedbackStates(initialStates);
+  }, [rankeableEpisodeIDs]);
+
   return (
     <RatingInfoContext.Provider value={ratingInfoValue}>
       <ProgressHeader
@@ -215,6 +242,7 @@ const onDragEnd = (dropResult: DropResult) => {
         maxRankingElements={activeUIConfig.max_ranking_elements}
         onSubmit={() => submitFeedback(scheduledFeedback)}
         onSubmitHover={setIsOnSubmit}
+        isSubmitDisabled={!allEpisodesHaveFeedback}
       />
       <Box
         id="feedback-interface"
@@ -265,6 +293,7 @@ const onDragEnd = (dropResult: DropResult) => {
                     evalFeedback={evalFeedback}
                     updateEvalFeedback={updateEvalFeedback}
                     setDemoModalOpen={setDemoModalOpen}
+                    onTextFeedbackChange={handleTextFeedbackChange}
                   />
                 );
               })}
