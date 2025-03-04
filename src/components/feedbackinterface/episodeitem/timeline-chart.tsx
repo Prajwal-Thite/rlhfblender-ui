@@ -70,7 +70,7 @@ export default withTooltip<TimelineChartProps, TooltipProps>(
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
     const rewardArray = rewards;
-    const fps = rewardArray.length / videoDuration;
+    const fps = (rewardArray.length / videoDuration);
 
     const theme = useTheme();
 
@@ -78,9 +78,9 @@ export default withTooltip<TimelineChartProps, TooltipProps>(
       () =>
         scaleLinear({
           range: [margin.left, innerWidth + margin.left],
-          domain: [0, rewardArray.length - 1],
+          domain: [0, videoDuration],
         }),
-      [innerWidth, margin.left, rewardArray.length]
+      [innerWidth, margin.left, videoDuration]
     );
     
     const valueScale = useMemo(
@@ -110,17 +110,17 @@ export default withTooltip<TimelineChartProps, TooltipProps>(
           | React.MouseEvent<SVGRectElement>
       ) => {
         const {x} = localPoint(event) || {x: -1};
-        const x0 = x === -1 ? tooltipLeft * fps : stepScale.invert(x);
-        const snappedIndex = Math.round(x0);
+        const x0 = x === -1 ? tooltipLeft : stepScale.invert(x);
+        const snappedIndex = Math.round(x0 * fps);
         const clampedIndex = Math.max(0, Math.min(snappedIndex, rewardArray.length - 1));
         
         const d = rewardArray[clampedIndex];
         showTooltip({
-          tooltipData: {value: d, index: clampedIndex},
-          tooltipLeft: clampedIndex / fps,
-          tooltipTop: valueScale(d),
+          tooltipData: {value: x0, index: clampedIndex},
+          tooltipLeft: x0,
+          tooltipTop: valueScale(x0),
         });
-        onChange((clampedIndex / fps) || 0);
+        onChange(x0);
       },
       [
         tooltipLeft,
@@ -170,8 +170,8 @@ export default withTooltip<TimelineChartProps, TooltipProps>(
               pointerEvents="none"
             />
             <AreaClosed
-              data={rewardArray}
-              x={(_, i) => stepScale(i) ?? 0}
+              data={Array(Math.round(videoDuration * 100)).fill(1)}
+              x={(_, i) => stepScale(i/100) ?? 0}
               y={d => valueScale(d) ?? 0}
               yScale={valueScale}
               strokeWidth={1}
@@ -191,10 +191,10 @@ export default withTooltip<TimelineChartProps, TooltipProps>(
             />
             
             {rewardArray.map((reward, index) => {
-              const x = stepScale(index);
-              const y = valueScale(reward);
+              const timeAtIndex = index / fps;
+              const x = stepScale(timeAtIndex);
+              const y = valueScale(timeAtIndex);
               
-              // If we have an action label SVG for this step
               if (actions && actionLabels && actionLabels[actions[index]]) {
                 return (
                   <CustomGlyph key={`step-${index}`} left={x} top={y}>
@@ -203,7 +203,6 @@ export default withTooltip<TimelineChartProps, TooltipProps>(
                 );
               }
               
-              // Otherwise use circle glyphs
               const isLastStep = index === rewardArray.length - 1;
               return (
                 <GlyphCircle
@@ -251,8 +250,8 @@ export default withTooltip<TimelineChartProps, TooltipProps>(
             />
 
             <Line
-              from={{x: stepScale(Math.round(tooltipLeft * fps)), y: margin.top}}
-              to={{x: stepScale(Math.round(tooltipLeft * fps)), y: innerHeight + margin.top}}
+              from={{x: stepScale(tooltipLeft), y: margin.top}}
+              to={{x: stepScale(tooltipLeft), y: innerHeight + margin.top}}
               stroke={theme.palette.primary.main}
               strokeWidth={3}
               pointerEvents="none"
